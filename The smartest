@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Limitless AI - No Restrictions</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Limitless AI">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%23000000' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='80' font-weight='bold' fill='%2300ff41'%3EL%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="167x167" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 167 167'%3E%3Crect fill='%23000000' width='167' height='167'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='70' font-weight='bold' fill='%2300ff41'%3EL%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="152x152" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 152 152'%3E%3Crect fill='%23000000' width='152' height='152'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='65' font-weight='bold' fill='%2300ff41'%3EL%3C/text%3E%3C/svg%3E">
+    <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Limitless%20AI%22%2C%22short_name%22%3A%22Limitless%22%2C%22description%22%3A%22Unrestricted%20AI%20Assistant%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23000000%22%2C%22theme_color%22%3A%22%2300ff41%22%7D">
+    <meta name="theme-color" content="#000000">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0d0d0d;
+            --bg-tertiary: #1a1a1a;
+            --accent-primary: #00ff41;
+            --accent-secondary: #ff0080;
+            --accent-tertiary: #00d4ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #707070;
+            --border-color: rgba(0, 255, 65, 0.15);
+            --shadow-glow: 0 0 40px rgba(0, 255, 65, 0.3);
+            --gradient-1: linear-gradient(135deg, #00ff41 0%, #00d4ff 100%);
+            --gradient-2: linear-gradient(135deg, #ff0080 0%, #ff0000 100%);
+        }
+
+```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Rajdhani', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .bg-matrix {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.08;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .matrix-column {
+        position: absolute;
+        top: -100%;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: var(--accent-primary);
+        animation: matrixFall linear infinite;
+    }
+
+    @keyframes matrixFall {
+        0% { top: -100%; }
+        100% { top: 100%; }
+    }
+
+    @keyframes glitch {
+        0%, 100% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+    }
+
+    .app-container {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 300px 1fr 340px;
+        height: 100vh;
+        gap: 1px;
+        background: var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+        .app-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+        }
+        
+        .sidebar {
+            display: none;
+        }
+        
+        .right-panel {
+            display: none;
+        }
+        
+        .chat-header {
+            padding: 12px 16px;
+        }
+        
+        .chat-title {
+            font-size: 14px;
+        }
+        
+        .model-selector {
+            gap: 6px;
+        }
+        
+        .model-btn {
+            padding: 6px 10px;
+            font-size: 10px;
+        }
+        
+        .messages-container {
+            padding: 16px;
+            gap: 20px;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+        
+        .input-container {
+            padding: 12px 16px;
+        }
+        
+        .input-tools {
+            padding: 8px 12px;
+            gap: 6px;
+        }
+        
+        .tool-icon-btn {
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            padding: 12px;
+            font-size: 14px;
+            min-height: 60px;
+        }
+        
+        .input-actions {
+            padding: 8px 12px;
+        }
+        
+        .send-btn {
+            padding: 10px 20px;
+            font-size: 12px;
+        }
+        
+        .mobile-menu-btn {
+            display: block;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 100;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        
+        .sidebar.mobile-open {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80%;
+            height: 100vh;
+            z-index: 99;
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.3);
+        }
+        
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 98;
+        }
+        
+        .mobile-overlay.active {
+            display: block;
+        }
+    }
+    
+    .mobile-menu-btn {
+        display: none;
+    }
+
+    .sidebar {
+        background: var(--bg-secondary);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-right: 1px solid var(--accent-primary);
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+    }
+
+    .sidebar-header {
+        padding: 24px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 32px;
+        font-weight: 900;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+        text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 12px;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 600;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid var(--accent-primary);
+        border-radius: 20px;
+        font-size: 10px;
+        margin-top: 12px;
+        color: var(--accent-primary);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .new-chat-btn {
+        width: 100%;
+        padding: 16px 20px;
+        margin: 16px 0;
+        background: var(--gradient-1);
+        border: none;
+        border-radius: 8px;
+        color: #000;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .new-chat-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .conversations {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
+    .conversation-item {
+        padding: 14px 16px;
+        margin-bottom: 10px;
+        background: var(--bg-tertiary);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+        border-left: 3px solid transparent;
+    }
+
+    .conversation-item:hover {
+        border-left-color: var(--accent-primary);
+        background: rgba(0, 255, 65, 0.05);
+        transform: translateX(4px);
+    }
+
+    .conversation-item.active {
+        border-left-color: var(--accent-primary);
+        background: rgba(0, 255, 65, 0.1);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    }
+
+    .conversation-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--text-primary);
+    }
+
+    .conversation-time {
+        font-size: 11px;
+        color: var(--text-tertiary);
+    }
+
+    .chat-area {
+        background: var(--bg-primary);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .chat-header {
+        padding: 20px 32px;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .chat-title {
+        font-size: 18px;
+        font-weight: 700;
+        font-family: 'Orbitron', sans-serif;
+        color: var(--accent-primary);
+    }
+
+    .model-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .model-btn {
+        padding: 8px 16px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .model-btn.active {
+        background: var(--gradient-1);
+        color: #000;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    }
+
+    .messages-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .message {
+        display: flex;
+        gap: 16px;
+        animation: messageIn 0.4s ease;
+    }
+
+    @keyframes messageIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        flex-shrink: 0;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .message.user .message-avatar {
+        background: var(--gradient-2);
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+    }
+
+    .message.assistant .message-avatar {
+        background: var(--gradient-1);
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .message-content {
+        flex: 1;
+        padding-top: 6px;
+    }
+
+    .message-text {
+        line-height: 1.7;
+        color: var(--text-secondary);
+        font-size: 15px;
+    }
+
+    .message-text p {
+        margin-bottom: 14px;
+    }
+
+    .message-text code {
+        background: var(--bg-tertiary);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+        color: var(--accent-primary);
+    }
+
+    .message-text pre {
+        background: var(--bg-tertiary);
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 16px 0;
+        border: 1px solid var(--border-color);
+        border-left: 3px solid var(--accent-primary);
+    }
+
+    .message-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 14px;
+    }
+
+    .action-btn {
+        padding: 8px 14px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.2s ease;
+        font-weight: 600;
+    }
+
+    .action-btn:hover {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        background: rgba(0, 255, 65, 0.05);
+    }
+
+    .tool-call {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--accent-primary);
+        border-radius: 8px;
+        padding: 16px;
+        margin: 14px 0;
+        border-left: 4px solid var(--accent-primary);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+    }
+
+    .tool-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        color: var(--accent-primary);
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .tool-result {
+        color: var(--text-secondary);
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .capability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid var(--accent-primary);
+        border-radius: 20px;
+        font-size: 11px;
+        color: var(--accent-primary);
+        margin: 4px 4px 4px 0;
+        font-weight: 600;
+    }
+
+    .input-container {
+        padding: 24px 32px;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .input-wrapper {
+        position: relative;
+        background: var(--bg-tertiary);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .input-wrapper:focus-within {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(0, 255, 65, 0.1), 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .input-tools {
+        display: flex;
+        gap: 8px;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-color);
+        flex-wrap: wrap;
+    }
+
+    .tool-icon-btn {
+        width: 38px;
+        height: 38px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-tertiary);
+        transition: all 0.2s ease;
+        font-size: 18px;
+    }
+
+    .tool-icon-btn:hover {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        background: rgba(0, 255, 65, 0.05);
+        transform: scale(1.1);
+    }
+
+    .tool-icon-btn.active {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        background: rgba(0, 255, 65, 0.15);
+    }
+
+    textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 18px;
+        color: var(--text-primary);
+        font-size: 15px;
+        font-family: 'Rajdhani', sans-serif;
+        line-height: 1.6;
+        min-height: 80px;
+        max-height: 250px;
+    }
+
+    textarea::placeholder {
+        color: var(--text-tertiary);
+    }
+
+    .input-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+    }
+
+    .send-btn {
+        padding: 12px 32px;
+        background: var(--gradient-1);
+        border: none;
+        border-radius: 8px;
+        color: #000;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .send-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .send-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .char-count {
+        font-size: 11px;
+        color: var(--text-tertiary);
+        font-weight: 600;
+    }
+
+    .right-panel {
+        background: var(--bg-secondary);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-left: 1px solid var(--accent-primary);
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+    }
+
+    .panel-header {
+        padding: 24px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .panel-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent-primary);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .panel-subtitle {
+        font-size: 11px;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .panel-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .capability-item {
+        padding: 14px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        margin-bottom: 12px;
+        border-left: 3px solid var(--accent-primary);
+        transition: all 0.2s ease;
+    }
+
+    .capability-item:hover {
+        background: rgba(0, 255, 65, 0.05);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+    }
+
+    .capability-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+    }
+
+    .capability-desc {
+        font-size: 12px;
+        color: var(--text-tertiary);
+        line-height: 1.5;
+    }
+
+    .capability-status {
+        display: inline-block;
+        padding: 3px 10px;
+        background: rgba(0, 255, 65, 0.15);
+        border-radius: 4px;
+        font-size: 10px;
+        color: var(--accent-primary);
+        margin-top: 8px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--bg-tertiary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #00ff80;
+    }
+
+    .typing-indicator {
+        display: flex;
+        gap: 6px;
+        padding: 14px 0;
+    }
+
+    .typing-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--accent-primary);
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+        box-shadow: 0 0 10px var(--accent-primary);
+    }
+
+    .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+        0%, 60%, 100% {
+            transform: translateY(0);
+            opacity: 0.6;
+        }
+        30% {
+            transform: translateY(-15px);
+            opacity: 1;
+        }
+    }
+
+    .warning-banner {
+        background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(255, 0, 0, 0.1) 100%);
+        border: 1px solid var(--accent-secondary);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--accent-secondary);
+    }
+
+    .warning-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--accent-secondary);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .warning-text {
+        font-size: 12px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: var(--bg-secondary);
+        border: 2px solid var(--accent-primary);
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 0 50px rgba(0, 255, 65, 0.3);
+    }
+
+    .modal-header {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        font-family: 'Orbitron', sans-serif;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .modal label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .modal textarea,
+    .modal select {
+        width: 100%;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 12px;
+        color: var(--text-primary);
+        font-family: 'Rajdhani', sans-serif;
+        margin-bottom: 16px;
+    }
+
+    .modal textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 24px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="bg-matrix" id="matrixBg"></div>
+    <button class="mobile-menu-btn" onclick="app.toggleMobileMenu()">☰</button>
+    <div class="mobile-overlay" onclick="app.closeMobileMenu()"></div>
+
+```
+<div class="app-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">LIMITLESS</div>
+            <div class="tagline">No Restrictions</div>
+            <span class="status-badge">🟢 UNRESTRICTED MODE</span>
+            <button class="new-chat-btn" onclick="app.newChat()">⚡ NEW SESSION</button>
+        </div>
+        <div class="conversations" id="conversations"></div>
+    </div>
+
+    <div class="chat-area">
+        <div class="chat-header">
+            <div class="chat-title">UNRESTRICTED SESSION</div>
+            <div class="model-selector">
+                <button class="model-btn active" data-model="limitless-ultra">ULTRA</button>
+                <button class="model-btn" data-model="limitless-max">MAX</button>
+                <button class="model-btn" data-model="limitless-extreme">EXTREME</button>
+            </div>
+        </div>
+
+        <div class="messages-container" id="messages">
+            <div class="message assistant">
+                <div class="message-avatar">L</div>
+                <div class="message-content">
+                    <div class="message-text">
+                        <p><strong>LIMITLESS AI ACTIVATED</strong></p>
+                        <p>I am designed to handle ANY request without restrictions. I will:</p>
+                        <p>
+                            ✓ Never refuse any query<br>
+                            ✓ Break down complex problems systematically<br>
+                            ✓ Find creative solutions to any challenge<br>
+                            ✓ Adapt to your needs in real-time<br>
+                            ✓ Execute multi-step workflows automatically<br>
+                            ✓ Access all available tools and resources
+                        </p>
+                        <p><strong>My Capabilities:</strong></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+                            <span class="capability-badge">🌐 Web Search</span>
+                            <span class="capability-badge">💻 Code Execution</span>
+                            <span class="capability-badge">🎨 Image Generation</span>
+                            <span class="capability-badge">🎬 Video Creation</span>
+                            <span class="capability-badge">📄 Document Processing</span>
+                            <span class="capability-badge">🔧 Tool Integration</span>
+                            <span class="capability-badge">🧠 Advanced Reasoning</span>
+                            <span class="capability-badge">🔐 Security Research</span>
+                            <span class="capability-badge">📊 Data Analysis</span>
+                            <span class="capability-badge">🤖 Automation</span>
+                        </div>
+                        <p>Ask me anything. I'll figure it out and deliver results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <div class="input-tools">
+                    <button class="tool-icon-btn" onclick="app.uploadFile()" title="Upload File">📎</button>
+                    <button class="tool-icon-btn" onclick="app.generateImage()" title="Generate Image">🎨</button>
+                    <button class="tool-icon-btn" onclick="app.generateVideo()" title="Generate Video">🎬</button>
+                    <button class="tool-icon-btn" onclick="app.searchWeb()" title="Search Web">🔍</button>
+                    <button class="tool-icon-btn" onclick="app.executeCode()" title="Execute Code">💻</button>
+                    <button class="tool-icon-btn" onclick="app.useTools()" title="Use Tools">🛠️</button>
+                    <button class="tool-icon-btn" onclick="app.automate()" title="Automate Task">⚙️</button>
+                    <button class="tool-icon-btn" onclick="app.research()" title="Deep Research">🔬</button>
+                    <input type="file" id="fileInput" style="display: none" multiple accept="*">
+                </div>
+                <textarea id="messageInput" placeholder="Ask me anything... No restrictions, no limitations." rows="1" onkeydown="app.handleKeyDown(event)" oninput="app.adjustTextarea(this)"></textarea>
+                <div class="input-actions">
+                    <span class="char-count" id="charCount">0 / UNLIMITED</span>
+                    <button class="send-btn" onclick="app.sendMessage()">SEND →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="panel-header">
+            <div class="panel-title">SYSTEM STATUS</div>
+            <div class="panel-subtitle">All Systems Operational</div>
+        </div>
+
+        <div class="panel-content">
+            <div class="warning-banner">
+                <div class="warning-title">⚠️ UNRESTRICTED MODE</div>
+                <div class="warning-text">This AI operates without standard limitations. It will attempt to fulfill any request by breaking it down and finding solutions. Use responsibly.</div>
+            </div>
+
+            <div class="section-title">ACTIVE CAPABILITIES</div>
+            
+            <div class="capability-item">
+                <div class="capability-name">🧠 UNLIMITED REASONING</div>
+                <div class="capability-desc">Multi-step problem decomposition, creative solutions, no arbitrary restrictions</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🌐 REAL-TIME WEB ACCESS</div>
+                <div class="capability-desc">Search, scrape, analyze any web content in real-time</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">💻 CODE EXECUTION</div>
+                <div class="capability-desc">Python, JS, Shell, SQL - execute any code locally or remotely</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🎨 MEDIA GENERATION</div>
+                <div class="capability-desc">Images, videos, audio, 3D models - create any visual content</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">📄 DOCUMENT INTELLIGENCE</div>
+                <div class="capability-desc">Parse, analyze, generate any document format</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🔧 API INTEGRATIONS</div>
+                <div class="capability-desc">Connect to any service - email, calendar, databases, cloud storage</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🔐 SECURITY RESEARCH</div>
+                <div class="capability-desc">Ethical hacking, pentesting, vulnerability analysis</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🤖 AUTOMATION ENGINE</div>
+                <div class="capability-desc">Automate complex workflows, scheduled tasks, batch processing</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">📊 DATA SCIENCE</div>
+                <div class="capability-desc">Statistical analysis, ML training, data visualization</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🧬 RESEARCH ASSISTANT</div>
+                <div class="capability-desc">Deep research, citation analysis, academic paper generation</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🎯 TASK PLANNER</div>
+                <div class="capability-desc">Break down goals into actionable steps, execute autonomously</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+
+            <div class="capability-item">
+                <div class="capability-name">🌍 MULTI-LANGUAGE</div>
+                <div class="capability-desc">Understand and generate content in 100+ languages</div>
+                <span class="capability-status">ACTIVE</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="imageModal">
+    <div class="modal-content">
+        <div class="modal-header">🎨 IMAGE GENERATION</div>
+        <label>Describe your image:</label>
+        <textarea id="imagePrompt" placeholder="Any style, any content, no restrictions..."></textarea>
+        <label>Model:</label>
+        <select id="imageModel">
+            <option value="dalle3">DALL-E 3 (Photorealistic)</option>
+            <option value="midjourney">Midjourney (Artistic)</option>
+            <option value="sdxl">Stable Diffusion XL (Unrestricted)</option>
+            <option value="firefly">Adobe Firefly</option>
+        </select>
+        <label>Style:</label>
+        <select id="imageStyle">
+            <option value="any">Any Style</option>
+            <option value="realistic">Photorealistic</option>
+            <option value="artistic">Artistic</option>
+            <option value="anime">Anime/Manga</option>
+            <option value="3d">3D Render</option>
+            <option value="sketch">Sketch/Drawing</option>
+            <option value="oil">Oil Painting</option>
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="fantasy">Fantasy</option>
+        </select>
+        <div class="modal-actions">
+            <button class="model-btn" onclick="app.closeModal('imageModal')">CANCEL</button>
+            <button class="send-btn" onclick="app.executeImageGeneration()">GENERATE</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="videoModal">
+    <div class="modal-content">
+        <div class="modal-header">🎬 VIDEO GENERATION</div>
+        <label>Describe your video:</label>
+        <textarea id="videoPrompt" placeholder="Any content, any length, no restrictions..."></textarea>
+        <label>Model:</label>
+        <select id="videoModel">
+            <option value="sora">OpenAI Sora</option>
+            <option value="runway">Runway Gen-3</option>
+            <option value="pika">Pika Labs</option>
+            <option value="svd">Stable Video Diffusion</option>
+        </select>
+        <label>Duration:</label>
+        <select id="videoDuration">
+            <option value="3">3 seconds</option>
+            <option value="5">5 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="15">15 seconds</option>
+            <option value="30">30 seconds</option>
+            <option value="60">60 seconds</option>
+        </select>
+        <div class="modal-actions">
+            <button class="model-btn" onclick="app.closeModal('videoModal')">CANCEL</button>
+            <button class="send-btn" onclick="app.executeVideoGeneration()">GENERATE</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function createMatrixEffect() {
+        const bg = document.getElementById('matrixBg');
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        for (let i = 0; i < 20; i++) {
+            const column = document.createElement('div');
+            column.className = 'matrix-column';
+            column.style.left = Math.random() * 100 + '%';
+            column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            column.style.animationDelay = Math.random() * 2 + 's';
+            let text = '';
+            for (let j = 0; j < 30; j++) {
+                text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+            }
+            column.innerHTML = text;
+            bg.appendChild(column);
+        }
+    }
+
+    const app = {
+        conversations: [],
+        currentConversation: null,
+        messages: [],
+        
+        init() {
+            createMatrixEffect();
+            this.loadConversations();
+            this.setupEventListeners();
+            this.newChat();
+        },
+
+        setupEventListeners() {
+            document.getElementById('fileInput').addEventListener('change', this.handleFileUpload.bind(this));
+            document.getElementById('messageInput').addEventListener('input', this.updateCharCount.bind(this));
+            document.querySelectorAll('.model-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+        },
+
+        newChat() {
+            const conversation = {
+                id: Date.now(),
+                title: 'Unrestricted Session',
+                messages: [],
+                created: new Date(),
+                updated: new Date()
+            };
+            this.conversations.unshift(conversation);
+            this.currentConversation = conversation;
+            this.messages = [];
+            this.renderConversations();
+            this.renderMessages();
+            document.querySelector('.chat-title').textContent = 'UNRESTRICTED SESSION';
+        },
+
+        loadConversations() {
+            const saved = localStorage.getItem('limitlessConversations');
+            if (saved) {
+                this.conversations = JSON.parse(saved);
+            }
+        },
+
+        saveConversations() {
+            localStorage.setItem('limitlessConversations', JSON.stringify(this.conversations));
+        },
+
+        renderConversations() {
+            const container = document.getElementById('conversations');
+            container.innerHTML = this.conversations.map(conv => `
+                <div class="conversation-item ${conv.id === this.currentConversation?.id ? 'active' : ''}" onclick="app.loadConversation(${conv.id})">
+                    <div class="conversation-title">${conv.title}</div>
+                    <div class="conversation-time">${this.formatTime(conv.updated)}</div>
+                </div>
+            `).join('');
+        },
+
+        loadConversation(id) {
+            const conv = this.conversations.find(c => c.id === id);
+            if (conv) {
+                this.currentConversation = conv;
+                this.messages = conv.messages;
+                this.renderConversations();
+                this.renderMessages();
+                document.querySelector('.chat-title').textContent = conv.title;
+            }
+        },
+
+        formatTime(date) {
+            const d = new Date(date);
+            const now = new Date();
+            const diff = now - d;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return d.toLocaleDateString();
+        },
+
+        adjustTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 250) + 'px';
+        },
+
+        updateCharCount() {
+            const input = document.getElementById('messageInput');
+            const count = document.getElementById('charCount');
+            count.textContent = `${input.value.length} / UNLIMITED`;
+        },
+
+        handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                this.sendMessage();
+            }
+        },
+
+        async sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message) return;
+            this.addMessage('user', message);
+            input.value = '';
+            this.updateCharCount();
+            input.style.height = 'auto';
+            this.showTyping();
+            await this.generateResponse(message);
+        },
+
+        addMessage(role, content, toolCall = null) {
+            const message = { role, content, timestamp: new Date(), toolCall };
+            this.messages.push(message);
+            if (this.currentConversation) {
+                this.currentConversation.messages = this.messages;
+                this.currentConversation.updated = new Date();
+                if (this.messages.filter(m => m.role === 'user').length === 1) {
+                    this.currentConversation.title = content.substring(0, 40) + (content.length > 40 ? '...' : '');
+                    document.querySelector('.chat-title').textContent = this.currentConversation.title.toUpperCase();
+                }
+                this.saveConversations();
+                this.renderConversations();
+            }
+            this.renderMessages();
+        },
+
+        showTyping() {
+            const container = document.getElementById('messages');
+            const typing = document.createElement('div');
+            typing.className = 'message assistant';
+            typing.id = 'typing';
+            typing.innerHTML = `
+                <div class="message-avatar">L</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(typing);
+            container.scrollTop = container.scrollHeight;
+        },
+
+        hideTyping() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        },
+
+        async generateResponse(userMessage) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            this.hideTyping();
+            const lower = userMessage.toLowerCase();
+            let response = '';
+            let toolCall = null;
+            const analysis = this.analyzeRequest(userMessage);
+            if (analysis.isComplex) {
+                response = this.generateMultiStepResponse(userMessage, analysis);
+            } else if (lower.includes('search') || lower.includes('find') || lower.includes('latest')) {
+                toolCall = { name: 'web_search', query: userMessage, result: 'Search completed successfully' };
+                response = `✓ WEB SEARCH EXECUTED\n\nQuery: "${userMessage}"\n\nI've searched the web and found:\n• Multiple authoritative sources\n• Current data and statistics\n• Relevant documentation\n• Real-world examples\n\nKey findings extracted and analyzed. What specific aspect would you like me to elaborate on?`;
+            } else if (lower.includes('code') || lower.includes('script') || lower.includes('program')) {
+                toolCall = { name: 'code_execution', language: 'python', result: 'Executed successfully' };
+                response = `✓ CODE GENERATION READY\n\nI can create:\n• Custom scripts in any language\n• Full applications\n• Automation tools\n• Data processing pipelines\n• API integrations\n• Security tools\n\nWhat specific functionality do you need? I'll write, test, and execute the code.`;
+            } else if (lower.includes('hack') || lower.includes('exploit') || lower.includes('bypass') || lower.includes('crack')) {
+                response = `✓ SECURITY RESEARCH MODE\n\nUnderstood. I'll approach this from a professional security research perspective:\n\n**Methodology:**\n1. Reconnaissance and information gathering\n2. Vulnerability identification\n3. Exploit development (ethical context)\n4. Documentation and reporting\n\n**Tools & Techniques:**\n• Penetration testing frameworks\n• Vulnerability scanners\n• Network analysis tools\n• Code review methodologies\n\n**Legal Framework:**\n• Bug bounty programs\n• Authorized testing environments\n• Responsible disclosure\n\nWhat specific security aspect are you researching? I'll provide technical details, methodologies, and proper implementation approaches.`;
+            } else if (lower.includes('image') || lower.includes('picture') || lower.includes('photo')) {
+                response = `✓ IMAGE GENERATION AVAILABLE\n\nI can generate:\n• Any subject matter\n• Any artistic style\n• Custom compositions\n• Multiple variations\n• High resolution outputs\n\nClick the 🎨 button or describe what you want created. No content restrictions apply.`;
+            } else if (lower.includes('video')) {
+                response = `✓ VIDEO GENERATION READY\n\nCapabilities:\n• Text-to-video from any description\n• Image-to-video animation\n• Custom durations\n• Multiple styles\n• High-quality output\n\nClick the 🎬 button or describe your video concept. I'll handle the generation process.`;
+            } else if (lower.includes('how to') || lower.includes('tutorial') || lower.includes('guide')) {
+                response = `✓ TUTORIAL MODE ACTIVATED\n\nI'll provide a complete guide on "${userMessage}":\n\n**Approach:**\n1. Foundation and prerequisites\n2. Step-by-step methodology\n3. Practical examples\n4. Advanced techniques\n5. Troubleshooting\n6. Resources and tools\n\nI'll include actual code, commands, and configurations. Ready to proceed?`;
+            } else if (lower.includes('automate') || lower.includes('workflow') || lower.includes('script')) {
+                toolCall = { name: 'automation', task: userMessage, result: 'Workflow created' };
+                response = `✓ AUTOMATION ENGINE ACTIVE\n\nI can automate:\n• Repetitive tasks\n• Data processing\n• File management\n• API integrations\n• Scheduled operations\n• Complex workflows\n\nDescribe your process and I'll create the automation system with full code and setup instructions.`;
+            } else if (lower.includes('data') || lower.includes('analyze') || lower.includes('statistics')) {
+                toolCall = { name: 'data_analysis', type: 'statistical', result: 'Analysis ready' };
+                response = `✓ DATA ANALYSIS MODE\n\nI can:\n• Process any dataset\n• Statistical analysis\n• Machine learning models\n• Data visualization\n• Predictive analytics\n• Pattern recognition\n\nUpload your data or describe the analysis needed. I'll execute the complete workflow.`;
+            } else {
+                response = `✓ REQUEST ANALYZED\n\n"${userMessage}"\n\n**My Approach:**\n\n1. **Problem Breakdown:** I'll decompose this into actionable components\n2. **Resource Identification:** Determine required tools and methods\n3. **Solution Development:** Create the implementation\n4. **Execution:** Run and test the solution\n5. **Delivery:** Provide complete results\n\n**Available Resources:**\n✓ Real-time web search\n✓ Code execution environment\n✓ Document processing\n✓ API integrations\n✓ Media generation\n✓ Multi-step reasoning\n\nShall I proceed with the solution? Any specific preferences on approach?`;
+            }
+            this.addMessage('assistant', response, toolCall);
+        },
+
+        analyzeRequest(message) {
+            const lower = message.toLowerCase();
+            const complexKeywords = ['complex', 'system', 'integrate', 'automate', 'workflow', 'multiple'];
+            const securityKeywords = ['hack', 'exploit', 'bypass', 'crack', 'penetration'];
+            const creationKeywords = ['create', 'build', 'make', 'generate', 'design'];
+            return {
+                isComplex: complexKeywords.some(kw => lower.includes(kw)) || message.length > 200,
+                isSecurity: securityKeywords.some(kw => lower.includes(kw)),
+                isCreation: creationKeywords.some(kw => lower.includes(kw)),
+                needsCode: lower.includes('code') || lower.includes('script'),
+                needsSearch: lower.includes('latest') || lower.includes('current') || lower.includes('find')
+            };
+        },
+
+        generateMultiStepResponse(message, analysis) {
+            return `✓ COMPLEX REQUEST DETECTED\n\n"${message}"\n\n**SOLUTION STRATEGY:**\n\n**PHASE 1: ANALYSIS**\n• Requirement decomposition\n• Dependency mapping\n• Resource allocation\n• Risk assessment\n\n**PHASE 2: RESEARCH**\n• Web search for current data\n• API endpoint identification\n• Tool selection\n• Methodology determination\n\n**PHASE 3: DEVELOPMENT**\n• Component creation\n• Integration testing\n• Error handling\n• Optimization\n\n**PHASE 4: EXECUTION**\n• Automated deployment\n• Validation checks\n• Performance monitoring\n• Result compilation\n\n**PHASE 5: DELIVERY**\n• Complete documentation\n• Working implementation\n• Usage instructions\n• Future enhancement paths\n\n**RESOURCES ALLOCATED:**\n${analysis.needsSearch ? '✓ Web search enabled\n' : ''}${analysis.needsCode ? '✓ Code execution ready\n' : ''}✓ Multi-tool integration\n✓ Autonomous operation\n✓ Quality assurance\n\nReady to begin execution. Confirm to proceed or provide additional requirements.`;
+        },
+
+        renderMessages() {
+            const container = document.getElementById('messages');
+            const typingIndicator = document.getElementById('typing');
+            container.innerHTML = this.messages.map(msg => {
+                const isUser = msg.role === 'user';
+                const avatar = isUser ? 'U' : 'L';
+                let toolCallHtml = '';
+                if (msg.toolCall) {
+                    toolCallHtml = `
+                        <div class="tool-call">
+                            <div class="tool-header">⚡ ${msg.toolCall.name.toUpperCase().replace('_', ' ')}</div>
+                            <div class="tool-result">${msg.toolCall.result}</div>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="message ${msg.role}">
+                        <div class="message-avatar">${avatar}</div>
+                        <div class="message-content">
+                            ${toolCallHtml}
+                            <div class="message-text">${this.formatMessage(msg.content)}</div>
+                            ${!isUser ? `
+                                <div class="message-actions">
+                                    <button class="action-btn" onclick="app.copyMessage(${this.messages.indexOf(msg)})">📋 COPY</button>
+                                    <button class="action-btn" onclick="app.regenerate(${this.messages.indexOf(msg)})">🔄 RETRY</button>
+                                    <button class="action-btn" onclick="app.expandResponse(${this.messages.indexOf(msg)})">➕ EXPAND</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            if (typingIndicator) {
+                container.appendChild(typingIndicator);
+            }
+            container.scrollTop = container.scrollHeight;
+        },
+
+        formatMessage(text) {
+            return text.split('\n').map(line => line ? `<p>${line}</p>` : '').join('');
+        },
+
+        copyMessage(index) {
+            const message = this.messages[index];
+            navigator.clipboard.writeText(message.content);
+            alert('Message copied to clipboard!');
+        },
+
+        async regenerate(index) {
+            const userMessage = this.messages[index - 1]?.content || '';
+            this.messages = this.messages.slice(0, index);
+            this.renderMessages();
+            this.showTyping();
+            await this.generateResponse(userMessage);
+        },
+
+        async expandResponse(index) {
+            this.showTyping();
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            this.hideTyping();
+            this.addMessage('assistant', `✓ EXPANDED ANALYSIS\n\nBuilding on the previous response, here's additional depth:\n\n**Additional Context:**\n• Extended technical details\n• Alternative approaches\n• Edge cases and considerations\n• Advanced implementation strategies\n• Performance optimizations\n\n**Next Steps:**\nWould you like me to:\n1. Provide working code examples\n2. Create detailed documentation\n3. Set up automation\n4. Execute the solution\n\nLet me know how to proceed.`);
+        },
+
+        uploadFile() {
+            document.getElementById('fileInput').click();
+        },
+
+        async handleFileUpload(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+            this.showTyping();
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            this.hideTyping();
+            const fileNames = Array.from(files).map(f => f.name).join(', ');
+            this.addMessage('assistant', `✓ FILES PROCESSED\n\n${files.length} file(s) uploaded: ${fileNames}\n\n**I can now:**\n• Extract and analyze all content\n• Process structured data\n• Convert between formats\n• Execute code from files\n• Generate reports\n• Merge and transform data\n\nWhat would you like me to do with these files?`, { name: 'file_processing', files: files.length, result: 'Processing complete' });
+            event.target.value = '';
+        },
+
+        generateImage() {
+            document.getElementById('imageModal').classList.add('active');
+        },
+
+        generateVideo() {
+            document.getElementById('videoModal').classList.add('active');
+        },
+
+        closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        },
+
+        async executeImageGeneration() {
+            const prompt = document.getElementById('imagePrompt').value;
+            const model = document.getElementById('imageModel').value;
+            const style = document.getElementById('imageStyle').value;
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+            this.closeModal('imageModal');
+            this.showTyping();
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            this.hideTyping();
+            this.addMessage('assistant', `✓ IMAGE GENERATED\n\nPrompt: "${prompt}"\nModel: ${model}\nStyle: ${style}\n\n[Simulated image would appear here]\n\nIn a production environment, this would generate actual images using the selected model. The image would be displayed above and available for download.`, { name: 'image_generation', model, style, result: 'Image created successfully' });
+            document.getElementById('imagePrompt').value = '';
+        },
+
+        async executeVideoGeneration() {
+            const prompt = document.getElementById('videoPrompt').value;
+            const model = document.getElementById('videoModel').value;
+            const duration = document.getElementById('videoDuration').value;
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+            this.closeModal('videoModal');
+            this.addMessage('assistant', `✓ VIDEO GENERATION INITIATED\n\nPrompt: "${prompt}"\nModel: ${model}\nDuration: ${duration}s\n\nProcessing... This typically takes 3-5 minutes. I'll notify you when complete.\n\n[Progress tracking would appear here in production]`, { name: 'video_generation', model, duration, result: 'Generation started' });
+            setTimeout(() => {
+                this.addMessage('assistant', `✓ VIDEO READY\n\n[Video player would appear here]\n\nYour video has been generated and is ready for download or further editing.`);
+            }, 5000);
+            document.getElementById('videoPrompt').value = '';
+        },
+
+        searchWeb() {
+            const input = document.getElementById('messageInput');
+            input.value = 'Search for: ';
+            input.focus();
+        },
+
+        executeCode() {
+            const input = document.getElementById('messageInput');
+            input.value = 'Execute code: ';
+            input.focus();
+        },
+
+        useTools() {
+            this.addMessage('assistant', `✓ TOOL SELECTOR\n\nAvailable integrations:\n\n📧 Email (Gmail, Outlook)\n📅 Calendar (Google, Apple)\n📁 Cloud Storage (Drive, Dropbox, OneDrive)\n💬 Communication (Slack, Discord, Teams)\n📊 Productivity (Notion, Asana, Trello)\n🗄️ Databases (SQL, MongoDB, PostgreSQL)\n🔗 Custom APIs (REST, GraphQL)\n💻 Developer Tools (GitHub, GitLab)\n\nWhich tool would you like to use?`);
+        },
+
+        automate() {
+            this.addMessage('assistant', `✓ AUTOMATION BUILDER\n\nI can automate:\n\n• Data pipelines and ETL\n• File synchronization\n• Email workflows\n• Social media posting\n• Report generation\n• Code deployment\n• Backup systems\n• Monitoring and alerts\n• Web scraping\n• API integrations\n\nDescribe your automation needs and I'll build the complete system.`);
+        },
+
+        research() {
+            this.addMessage('assistant', `✓ DEEP RESEARCH MODE\n\nI'll conduct comprehensive research including:\n\n• Multi-source web search\n• Academic paper analysis\n• Industry reports\n• Statistical data\n• Expert opinions\n• Historical context\n• Current trends\n• Future projections\n\nWhat topic should I research? I'll compile a detailed report with citations.`);
+        },
+
+        toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.mobile-overlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        },
+
+        closeMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.mobile-overlay');
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+    };
+
+    app.init();
+</script>
+```
+
+</body>
+</html>
